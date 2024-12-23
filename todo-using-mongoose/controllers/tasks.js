@@ -1,10 +1,11 @@
-const Item = require('../models/Item');
+const Item = require('../models/Task');
 
 exports.postAddItem = (req, res, next) => {
     const newItem = new Item({
         title: req.body.title,
         priority: req.body.priority,
         completed: req.body.completed,
+        description: req.body.description,
     });
 
     newItem.save()
@@ -20,7 +21,7 @@ exports.getItems = (req, res, next) => {
     Item.find()
         .then((items) => {
             if (items.length === 0) {
-                return res.status(204).send();
+                return res.status(204).send(null);
             } else {
                 return res.status(200).json(items);
             }
@@ -46,13 +47,14 @@ exports.getItem = (req, res, next) => {
 
 exports.putItem = (req, res, next) => {
     Item.findOneAndUpdate(
-        { _id: req.params.itemId }, // Filter
+        { _id: req.params.itemId },
         {
             title: req.body.title,
             priority: req.body.priority,
             completed: req.body.completed,
-        }, // Update
-        { new: true } // Return the updated document
+            description: req.body.description,
+        },
+        { new: true } 
     )
         .then((updatedItem) => {
             if (updatedItem) {

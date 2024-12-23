@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ItemSchema = new mongoose.Schema({
+const TaskSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -8,6 +8,10 @@ const ItemSchema = new mongoose.Schema({
     completed: {
         type: Boolean,
         default: false,
+    },
+    description: {
+        type: String,
+        required: false,
     },
     priority: {
         type: String,
@@ -17,6 +21,6 @@ const ItemSchema = new mongoose.Schema({
 });
 
 // Create and export the model
-const Item = mongoose.model('Item', ItemSchema);
+const Item = mongoose.model('Task', TaskSchema);
 
 module.exports = Item;
